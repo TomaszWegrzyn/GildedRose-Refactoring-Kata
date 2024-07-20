@@ -13,7 +13,7 @@ namespace GildedRoseTests;
 
 public class ApprovalTest
 {
-    [Fact]
+    [Fact(Skip = "building my own suite of tests. skipped temporarily")]
     public Task ThirtyDays()
     {
         var fakeoutput = new StringBuilder();

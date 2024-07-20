@@ -4,6 +4,7 @@ namespace GildedRoseKata;
 
 public class GildedRose
 {
+    // DO NOT CHANGE THIS property
     IList<Item> Items;
 
     public GildedRose(IList<Item> Items)
