@@ -78,7 +78,7 @@ public class GildedRoseTest
     [InlineData(47, 2342342)]
     [InlineData(49, 234234)]
     [InlineData(49, 2342342)]
-    public void AgedBrieIncreasesInQualityByOneUpTo50WhenSellInAboveZero(int quality, int sellIn)
+    public void AgedBrieIncreasesInQualityBy1UpTo50WhenSellInAboveZero(int quality, int sellIn)
     {
         var agedBrie = CreateAgedBrie(quality, sellIn);
         var items = UpdateQuality(agedBrie);
@@ -103,7 +103,7 @@ public class GildedRoseTest
     [InlineData(47, -2342342)]
     [InlineData(48, -234234)]
     [InlineData(48, -11)]
-    public void AgedBrieIncreasesInQualityByTwoUpTo50WhenSellInZeroOrLess(int quality, int sellIn)
+    public void AgedBrieIncreasesInQualityBy2UpTo50WhenSellInZeroOrLess(int quality, int sellIn)
     {
         var agedBrie = CreateAgedBrie(quality, sellIn);
         var items = UpdateQuality(agedBrie);
@@ -166,7 +166,7 @@ public class GildedRoseTest
     [InlineData(48, 11)]
     [InlineData(48, 15)]
     [InlineData(49, 11)]
-    public void BackstagePassesIncreasesInQualityByOneUpTo50WhenSellInAbove10(int quality, int sellIn)
+    public void BackstagePassesIncreasesInQualityBy1UpTo50WhenSellInAbove10(int quality, int sellIn)
     {
         var backstagePasses = CreateBackstagePasses(quality, sellIn);
         var items = UpdateQuality(backstagePasses);
@@ -200,7 +200,7 @@ public class GildedRoseTest
     [InlineData(48, 10)]
     [InlineData(48, 6)]
     [InlineData(48, 9)]
-    public void BackstagePassesIncreasesInQualityByOneUpTo50WhenSellInAbove5AndBelow11(int quality, int sellIn)
+    public void BackstagePassesIncreasesInQualityBy2UpTo50WhenSellInAbove5AndBelow11(int quality, int sellIn)
     {
         var backstagePasses = CreateBackstagePasses(quality, sellIn);
         var items = UpdateQuality(backstagePasses);
@@ -208,6 +208,36 @@ public class GildedRoseTest
         Assert.Equal(quality + 2, items.First().Quality);
     }
     
+    [Theory]
+    [InlineData(0, 1)]
+    [InlineData(0, 5)]
+    [InlineData(1, 1)]
+    [InlineData(1, 2)]
+    [InlineData(1, 5)]
+    [InlineData(2, 1)]
+    [InlineData(2, 2)]
+    [InlineData(2, 5)]
+    [InlineData(3, 1)]
+    [InlineData(3, 5)]
+    [InlineData(4, 1)]
+    [InlineData(4, 2)]
+    [InlineData(4, 5)]
+    [InlineData(15, 1)]
+    [InlineData(15, 2)]
+    [InlineData(20, 5)]
+    [InlineData(22, 5)]
+    [InlineData(23, 5)]
+    [InlineData(25, 1)]
+    [InlineData(47, 1)]
+    [InlineData(47, 2)]
+    [InlineData(47, 3)]
+    public void BackstagePassesIncreasesInQualityBy3UpTo50WhenSellInAbove0AndBelow6(int quality, int sellIn)
+    {
+        var backstagePasses = CreateBackstagePasses(quality, sellIn);
+        var items = UpdateQuality(backstagePasses);
+
+        Assert.Equal(quality + 3, items.First().Quality);
+    }
     
     private static IList<Item> UpdateQuality(Item item)
     {
