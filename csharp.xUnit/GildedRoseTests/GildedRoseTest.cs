@@ -31,15 +31,9 @@ public class GildedRoseTest
     [InlineData(55522)]
     public void SulfurasDoesNotDecreaseInQuality(int sellIn)
     {
-        var sulfuras = new Item()
-        {
-            Name = "Sulfuras, Hand of Ragnaros",
-            Quality = 80,
-            SellIn = sellIn
-        };
-        IList<Item> items = [sulfuras];
-        var sut = new GildedRose(items);
-        sut.UpdateQuality();
+        var sulfuras = CreateSulfuras(sellIn);
+        var items = UpdateQuality(sulfuras);
+
         Assert.Equal(80, items.First().Quality);
     }
 
@@ -63,17 +57,12 @@ public class GildedRoseTest
     [InlineData(2342342)]
     public void SulfurasSellInValueNeverChanges(int sellIn)
     {
-        var sulfuras = new Item()
-        {
-            Name = "Sulfuras, Hand of Ragnaros",
-            Quality = 80,
-            SellIn = sellIn
-        };
-        IList<Item> items = [sulfuras];
-        var sut = new GildedRose(items);
-        sut.UpdateQuality();
+        var sulfuras = CreateSulfuras(sellIn);
+        var items = UpdateQuality(sulfuras);
+
         Assert.Equal(sellIn, items.First().SellIn);
     }
+
 
     [Theory]
     [InlineData(0, 2)]
@@ -90,9 +79,7 @@ public class GildedRoseTest
     public void AgedBrieIncreasesInQualityByOneWhenSellInAboveZero(int quality, int sellIn)
     {
         var agedBrie = CreateAgedBrie(quality, sellIn);
-        IList<Item> items = [agedBrie];
-        var sut = new GildedRose(items);
-        sut.UpdateQuality();
+        var items = UpdateQuality(agedBrie);
 
         var expectedQuality = quality + 1;
         Assert.Equal(expectedQuality, items.First().Quality);
@@ -117,14 +104,54 @@ public class GildedRoseTest
     public void AgedBrieIncreasesInQualityByTwoWhenSellInZeroOrLess(int quality, int sellIn)
     {
         var agedBrie = CreateAgedBrie(quality, sellIn);
-        IList<Item> items = [agedBrie];
-        var sut = new GildedRose(items);
-        sut.UpdateQuality();
-
+        var items = UpdateQuality(agedBrie);
         var expectedQuality = quality + 2;
         Assert.Equal(expectedQuality, items.First().Quality);
     }
-    
+
+    [Theory]
+    [InlineData(0, -55555)]
+    [InlineData(0, 0)]
+    [InlineData(1, -55555)]
+    [InlineData(1, -24234)]
+    [InlineData(1, 0)]
+    [InlineData(2, -24234)]
+    [InlineData(2, -1)]
+    [InlineData(2, 0)]
+    [InlineData(3, -24234)]
+    [InlineData(3, 0)]
+    [InlineData(4, -24234)]
+    [InlineData(4, -1)]
+    [InlineData(4, 0)]
+    [InlineData(15, -1)]
+    [InlineData(15, 0)]
+    [InlineData(20, -24234)]
+    [InlineData(22, -24234)]
+    [InlineData(23, -24234)]
+    [InlineData(25, -24234)]
+    [InlineData(50, -24234)]
+    public void BackstagePassesQualityIsResetToZeroWhenSellInZeroOrLess(int quality, int sellIn)
+    {
+        var backstagePasses = new Item()
+        {
+            Name = "Backstage passes to a TAFKAL80ETC concert",
+            Quality = quality,
+            SellIn = sellIn,
+        };
+            
+        var items = UpdateQuality(backstagePasses);
+
+        Assert.Equal(0, items.First().Quality);
+    }
+
+    private static IList<Item> UpdateQuality(Item item)
+    {
+        IList<Item> items = [item];
+        var sut = new GildedRose(items);
+        sut.UpdateQuality();
+        return items;
+    }
+
     private static Item CreateAgedBrie(int quality, int sellIn)
     {
         var agedBrie = new Item()
@@ -134,5 +161,15 @@ public class GildedRoseTest
             SellIn = sellIn,
         };
         return agedBrie;
+    }
+    private static Item CreateSulfuras(int sellIn)
+    {
+        var sulfuras = new Item()
+        {
+            Name = "Sulfuras, Hand of Ragnaros",
+            Quality = 80,
+            SellIn = sellIn
+        };
+        return sulfuras;
     }
 }
