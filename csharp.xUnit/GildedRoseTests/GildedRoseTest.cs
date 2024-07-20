@@ -169,10 +169,52 @@ public class GildedRoseTest
     public void BackstagePassesIncreasesInQualityByOneUpTo50WhenSellInAbove10(int quality, int sellIn)
     {
         var backstagePasses = CreateBackstagePasses(quality, sellIn);
-            
         var items = UpdateQuality(backstagePasses);
 
         Assert.Equal(quality + 1, items.First().Quality);
+    }
+    
+    [Theory]
+    [InlineData(0, 6)]
+    [InlineData(0, 10)]
+    [InlineData(1, 6)]
+    [InlineData(1, 7)]
+    [InlineData(1, 10)]
+    [InlineData(2, 6)]
+    [InlineData(2, 7)]
+    [InlineData(2, 10)]
+    [InlineData(3, 6)]
+    [InlineData(3, 10)]
+    [InlineData(4, 6)]
+    [InlineData(4, 9)]
+    [InlineData(4, 10)]
+    [InlineData(15, 6)]
+    [InlineData(15, 10)]
+    [InlineData(20, 6)]
+    [InlineData(22, 6)]
+    [InlineData(23, 6)]
+    [InlineData(25, 6)]
+    [InlineData(47, 7)]
+    [InlineData(47, 8)]
+    [InlineData(47, 10)]
+    [InlineData(48, 10)]
+    [InlineData(48, 6)]
+    [InlineData(48, 9)]
+    public void BackstagePassesIncreasesInQualityByOneUpTo50WhenSellInAbove5AndBelow11(int quality, int sellIn)
+    {
+        var backstagePasses = CreateBackstagePasses(quality, sellIn);
+        var items = UpdateQuality(backstagePasses);
+
+        Assert.Equal(quality + 2, items.First().Quality);
+    }
+    
+    
+    private static IList<Item> UpdateQuality(Item item)
+    {
+        IList<Item> items = [item];
+        var sut = new GildedRose(items);
+        sut.UpdateQuality();
+        return items;
     }
 
     private static Item CreateBackstagePasses(int quality, int sellIn)
@@ -184,15 +226,6 @@ public class GildedRoseTest
             SellIn = sellIn,
         };
         return backstagePasses;
-    }
-
-
-    private static IList<Item> UpdateQuality(Item item)
-    {
-        IList<Item> items = [item];
-        var sut = new GildedRose(items);
-        sut.UpdateQuality();
-        return items;
     }
 
     private static Item CreateAgedBrie(int quality, int sellIn)
