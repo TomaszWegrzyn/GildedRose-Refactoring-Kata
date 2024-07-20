@@ -76,7 +76,9 @@ public class GildedRoseTest
     [InlineData(44, 324)]
     [InlineData(45, 234234)]
     [InlineData(47, 2342342)]
-    public void AgedBrieIncreasesInQualityByOneWhenSellInAboveZero(int quality, int sellIn)
+    [InlineData(49, 234234)]
+    [InlineData(49, 2342342)]
+    public void AgedBrieIncreasesInQualityByOneUpTo50WhenSellInAboveZero(int quality, int sellIn)
     {
         var agedBrie = CreateAgedBrie(quality, sellIn);
         var items = UpdateQuality(agedBrie);
@@ -84,9 +86,7 @@ public class GildedRoseTest
         var expectedQuality = quality + 1;
         Assert.Equal(expectedQuality, items.First().Quality);
     }
-
-  
-
+    
     [Theory]
     [InlineData(0, 0)]
     [InlineData(0, -1)]
@@ -101,7 +101,9 @@ public class GildedRoseTest
     [InlineData(44, -324)]
     [InlineData(45, -234234)]
     [InlineData(47, -2342342)]
-    public void AgedBrieIncreasesInQualityByTwoWhenSellInZeroOrLess(int quality, int sellIn)
+    [InlineData(48, -234234)]
+    [InlineData(48, -11)]
+    public void AgedBrieIncreasesInQualityByTwoUpTo50WhenSellInZeroOrLess(int quality, int sellIn)
     {
         var agedBrie = CreateAgedBrie(quality, sellIn);
         var items = UpdateQuality(agedBrie);
@@ -132,13 +134,7 @@ public class GildedRoseTest
     [InlineData(50, -24234)]
     public void BackstagePassesQualityIsResetToZeroWhenSellInZeroOrLess(int quality, int sellIn)
     {
-        var backstagePasses = new Item()
-        {
-            Name = "Backstage passes to a TAFKAL80ETC concert",
-            Quality = quality,
-            SellIn = sellIn,
-        };
-            
+        var backstagePasses = CreateBackstagePasses(quality, sellIn);
         var items = UpdateQuality(backstagePasses);
 
         Assert.Equal(0, items.First().Quality);
@@ -172,19 +168,25 @@ public class GildedRoseTest
     [InlineData(49, 11)]
     public void BackstagePassesIncreasesInQualityByOneUpTo50WhenSellInAbove10(int quality, int sellIn)
     {
-        var backstagePasses = new Item()
-        {
-            Name = "Backstage passes to a TAFKAL80ETC concert",
-            Quality = quality,
-            SellIn = sellIn,
-        };
+        var backstagePasses = CreateBackstagePasses(quality, sellIn);
             
         var items = UpdateQuality(backstagePasses);
 
         Assert.Equal(quality + 1, items.First().Quality);
     }
 
-    
+    private static Item CreateBackstagePasses(int quality, int sellIn)
+    {
+        var backstagePasses = new Item()
+        {
+            Name = "Backstage passes to a TAFKAL80ETC concert",
+            Quality = quality,
+            SellIn = sellIn,
+        };
+        return backstagePasses;
+    }
+
+
     private static IList<Item> UpdateQuality(Item item)
     {
         IList<Item> items = [item];
