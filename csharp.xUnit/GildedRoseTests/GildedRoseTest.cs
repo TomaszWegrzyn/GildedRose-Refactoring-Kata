@@ -144,6 +144,47 @@ public class GildedRoseTest
         Assert.Equal(0, items.First().Quality);
     }
 
+    [Theory]
+    [InlineData(0, 11)]
+    [InlineData(0, 20)]
+    [InlineData(1, 11)]
+    [InlineData(1, 12)]
+    [InlineData(1, 111)]
+    [InlineData(2, 11)]
+    [InlineData(2, 111)]
+    [InlineData(2, 11150)]
+    [InlineData(3, 11)]
+    [InlineData(3, 44)]
+    [InlineData(4, 11)]
+    [InlineData(4, 21)]
+    [InlineData(4, 30)]
+    [InlineData(15, 11)]
+    [InlineData(15, 120)]
+    [InlineData(20, 11)]
+    [InlineData(22, 34)]
+    [InlineData(23, 11)]
+    [InlineData(25, 11)]
+    [InlineData(47, 11)]
+    [InlineData(47, 12)]
+    [InlineData(47, 13)]
+    [InlineData(48, 11)]
+    [InlineData(48, 15)]
+    [InlineData(49, 11)]
+    public void BackstagePassesIncreasesInQualityByOneUpTo50WhenSellInAbove10(int quality, int sellIn)
+    {
+        var backstagePasses = new Item()
+        {
+            Name = "Backstage passes to a TAFKAL80ETC concert",
+            Quality = quality,
+            SellIn = sellIn,
+        };
+            
+        var items = UpdateQuality(backstagePasses);
+
+        Assert.Equal(quality + 1, items.First().Quality);
+    }
+
+    
     private static IList<Item> UpdateQuality(Item item)
     {
         IList<Item> items = [item];
