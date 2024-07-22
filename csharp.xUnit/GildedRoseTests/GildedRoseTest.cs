@@ -134,7 +134,7 @@ public class GildedRoseTest
         var expectedSellIn = sellIn -1;
         Assert.Equal(expectedSellIn, items.First().SellIn);
     }
-
+    
     [Theory]
     [InlineData(0, -55555)]
     [InlineData(0, 0)]
@@ -261,6 +261,30 @@ public class GildedRoseTest
         var items = UpdateQuality(backstagePasses);
 
         Assert.Equal(quality + 3, items.First().Quality);
+    }
+    
+    [Theory]
+    [InlineData(0, 50)]
+    [InlineData(0, 10)]
+    [InlineData(0, 1)]
+    [InlineData(1, 0)]
+    [InlineData(2, -1)]
+    [InlineData(3, -5)]
+    [InlineData(10, -4)]
+    [InlineData(14, -4)]
+    [InlineData(22, -5)]
+    [InlineData(25, -66)]
+    [InlineData(44, -324)]
+    [InlineData(45, -234234)]
+    [InlineData(47, -2342342)]
+    [InlineData(48, -234234)]
+    [InlineData(48, -11)]
+    public void BackstagePassesSellInAlwaysDecreasesBy1(int quality, int sellIn)
+    {
+        var agedBrie = CreateBackstagePasses(quality, sellIn);
+        var items = UpdateQuality(agedBrie);
+        var expectedSellIn = sellIn -1;
+        Assert.Equal(expectedSellIn, items.First().SellIn);
     }
 
     [Theory]
