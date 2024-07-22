@@ -2,6 +2,8 @@
 
 public static class ItemExtensions
 {
+    private const int MaxQuality = 50;
+
     public static void UpdateQuality(this Item item)
     {
         if (item.Name != GildedRose.AgedBrieName && item.Name != GildedRose.BackstagePassesName)
@@ -16,7 +18,7 @@ public static class ItemExtensions
         }
         else
         {
-            if (item.Quality < 50)
+            if (item.Quality < MaxQuality)
             {
                 item.Quality += 1;
 
@@ -24,7 +26,7 @@ public static class ItemExtensions
                 {
                     if (item.SellIn < 11)
                     {
-                        if (item.Quality < 50)
+                        if (item.Quality < MaxQuality)
                         {
                             item.Quality += 1;
                         }
@@ -32,7 +34,7 @@ public static class ItemExtensions
 
                     if (item.SellIn < 6)
                     {
-                        if (item.Quality < 50)
+                        if (item.Quality < MaxQuality)
                         {
                             item.Quality += 1;
                         }
@@ -67,7 +69,7 @@ public static class ItemExtensions
             }
             else
             {
-                if (item.Quality < 50)
+                if (item.Quality < MaxQuality)
                 {
                     item.Quality += 1;
                 }
