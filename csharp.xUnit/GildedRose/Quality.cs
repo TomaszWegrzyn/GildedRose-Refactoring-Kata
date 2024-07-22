@@ -43,6 +43,11 @@ public class Quality
         return new Quality(newValue, _maxValue);
 
     }
+    
+    public Quality ResetToZero()
+    {
+        return new Quality(0, _maxValue);
+    }
 
     public static Quality operator +(Quality quality, uint value)
     {
@@ -52,6 +57,16 @@ public class Quality
     public static Quality operator -(Quality quality, uint value)
     {
         return quality.DecreaseBy(value);
+    }
+    
+    public static bool operator ==(Quality quality, uint value)
+    {
+        return quality._currentValue == value;
+    }
+    
+    public static bool operator !=(Quality quality, uint value)
+    {
+       return quality._currentValue != value;
     }
 
     public static explicit operator int(Quality quality)
