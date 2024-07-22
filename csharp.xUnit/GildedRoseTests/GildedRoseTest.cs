@@ -329,7 +329,31 @@ public class GildedRoseTest
         var items = UpdateQuality(CreateItem(name, quality, sellIn));
         
         Assert.Equal(quality - 2, items.First().Quality);
-
+    }
+    
+     
+    [Theory]
+    [InlineData("normal item", 0, 0)]
+    [InlineData("normal item2", 1, -1)]
+    [InlineData("normal item2", 2, 11)]
+    [InlineData("normal item2", 5, 1)]
+    [InlineData("normal item3", 20, 2)]
+    [InlineData("normal item4", 2, -2)]
+    [InlineData("normal item5", 10, 0)]
+    [InlineData("normal item6", 10, -10)]
+    [InlineData("another normal item", 10, 0)]
+    [InlineData("actually normal item", 10, 0)]
+    [InlineData("coffee", 10, -220)]
+    [InlineData("nope, just item", 10, 0)]
+    [InlineData("normal item", 20, 0)]
+    [InlineData("normal item", 30, -3780)]
+    [InlineData("normal item", 50, 0)]
+    public void NormalItemsSellInAlwaysDecreasesBy1(string name, int quality, int sellIn)
+    {
+        var agedBrie = CreateItem(name, quality, sellIn);
+        var items = UpdateQuality(agedBrie);
+        var expectedSellIn = sellIn -1;
+        Assert.Equal(expectedSellIn, items.First().SellIn);
     }
     
     private static IList<Item> UpdateQuality(Item item)
