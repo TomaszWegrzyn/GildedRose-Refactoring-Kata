@@ -6,7 +6,8 @@ public static class ItemExtensions
 
     public static void UpdateQuality(this Item item)
     {
-        DecreaseSellInValue(item);
+        var sellInUpdater = SellInValueUpdaterFactory.Create(item.Name);
+        item.SellIn = sellInUpdater.UpdateSellInValue(item.SellIn);
         UpdateQualityInternal(item);
     }
 
@@ -75,14 +76,6 @@ public static class ItemExtensions
                     item.Quality += 1;
                 }
             }
-        }
-    }
-
-    private static void DecreaseSellInValue(Item item)
-    {
-        if (item.Name != GildedRose.SulfurasName)
-        {
-            item.SellIn -= 1;
         }
     }
 }
