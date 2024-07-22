@@ -6,6 +6,12 @@ public static class ItemExtensions
 
     public static void UpdateQuality(this Item item)
     {
+        DecreaseSellInValue(item);
+        UpdateQualityInternal(item);
+    }
+
+    private static void UpdateQualityInternal(Item item)
+    {
         if (item.Name != GildedRose.AgedBrieName && item.Name != GildedRose.BackstagePassesName)
         {
             if (item.Quality > 0)
@@ -24,7 +30,7 @@ public static class ItemExtensions
 
                 if (item.Name == GildedRose.BackstagePassesName)
                 {
-                    if (item.SellIn < 11)
+                    if (item.SellIn < 10)
                     {
                         if (item.Quality < MaxQuality)
                         {
@@ -32,7 +38,7 @@ public static class ItemExtensions
                         }
                     }
 
-                    if (item.SellIn < 6)
+                    if (item.SellIn < 5)
                     {
                         if (item.Quality < MaxQuality)
                         {
@@ -41,11 +47,6 @@ public static class ItemExtensions
                     }
                 }
             }
-        }
-
-        if (item.Name != GildedRose.SulfurasName)
-        {
-            item.SellIn -= 1;
         }
 
         if (item.SellIn < 0)
@@ -74,6 +75,14 @@ public static class ItemExtensions
                     item.Quality += 1;
                 }
             }
+        }
+    }
+
+    private static void DecreaseSellInValue(Item item)
+    {
+        if (item.Name != GildedRose.SulfurasName)
+        {
+            item.SellIn -= 1;
         }
     }
 }
