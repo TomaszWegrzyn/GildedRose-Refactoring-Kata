@@ -240,6 +240,29 @@ public class GildedRoseTest
     }
 
     [Theory]
+    [InlineData("normal item", 10, 1)]
+    [InlineData("normal item2", 11, 1)]
+    [InlineData("normal item3", 20, 10)]
+    [InlineData("normal item4", 2, 2)]
+    [InlineData("normal item5", 10, 10)]
+    [InlineData("normal item6", 10, 10)]
+    [InlineData("another normal item", 10, 3)]
+    [InlineData("actually normal item", 10, 1)]
+    [InlineData("coffee", 10, 220)]
+    [InlineData("nope, just item", 10, 1)]
+    [InlineData("normal item", 20, 301)]
+    [InlineData("normal item", 30, 780)]
+    [InlineData("normal item", 50, 6)]
+    public void NormalItemsDecreaseInQualityBy1DownTo0WhenSellInIsAbove0(string name, int quality, int sellIn)
+    {
+        var items = UpdateQuality(CreateItem(name, quality, sellIn));
+        
+        Assert.Equal(quality - 1, items.First().Quality);
+
+    }
+
+    
+    [Theory]
     [InlineData("normal item", 10, 0)]
     [InlineData("normal item2", 11, -1)]
     [InlineData("normal item3", 20, 0)]
