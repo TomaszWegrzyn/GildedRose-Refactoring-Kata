@@ -359,7 +359,7 @@ public class GildedRoseTest
     {
         var backstagePasses = new Item()
         {
-            Name = "Backstage passes to a TAFKAL80ETC concert",
+            Name = GildedRose.BackstagePassesName,
             Quality = quality,
             SellIn = sellIn,
         };
@@ -370,7 +370,7 @@ public class GildedRoseTest
     {
         var agedBrie = new Item()
         {
-            Name = "Aged Brie",
+            Name = GildedRose.AgedBrieName,
             Quality = quality,
             SellIn = sellIn,
         };
@@ -380,7 +380,7 @@ public class GildedRoseTest
     {
         var sulfuras = new Item()
         {
-            Name = "Sulfuras, Hand of Ragnaros",
+            Name = GildedRose.SulfurasName,
             Quality = 80,
             SellIn = sellIn
         };

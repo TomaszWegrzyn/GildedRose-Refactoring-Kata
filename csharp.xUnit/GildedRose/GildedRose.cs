@@ -4,6 +4,10 @@ namespace GildedRoseKata;
 
 public class GildedRose
 {
+    public const string AgedBrieName = "Aged Brie";
+    public const string SulfurasName = "Sulfuras, Hand of Ragnaros";
+    public const string BackstagePassesName = "Backstage passes to a TAFKAL80ETC concert";
+
     // DO NOT CHANGE THIS property
     // ReSharper disable all
     IList<Item> Items;
@@ -22,11 +26,11 @@ public class GildedRose
     {
         foreach (var item in Items)
         {
-            if (item.Name != "Aged Brie" && item.Name != "Backstage passes to a TAFKAL80ETC concert")
+            if (item.Name != AgedBrieName && item.Name != BackstagePassesName)
             {
                 if (item.Quality > 0)
                 {
-                    if (item.Name != "Sulfuras, Hand of Ragnaros")
+                    if (item.Name != SulfurasName)
                     {
                         item.Quality -= 1;
                     }
@@ -38,7 +42,7 @@ public class GildedRose
                 {
                     item.Quality += 1;
 
-                    if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
+                    if (item.Name == BackstagePassesName)
                     {
                         if (item.SellIn < 11)
                         {
@@ -59,20 +63,20 @@ public class GildedRose
                 }
             }
 
-            if (item.Name != "Sulfuras, Hand of Ragnaros")
+            if (item.Name != SulfurasName)
             {
                 item.SellIn -= 1;
             }
 
             if (item.SellIn < 0)
             {
-                if (item.Name != "Aged Brie")
+                if (item.Name != AgedBrieName)
                 {
-                    if (item.Name != "Backstage passes to a TAFKAL80ETC concert")
+                    if (item.Name != BackstagePassesName)
                     {
                         if (item.Quality > 0)
                         {
-                            if (item.Name != "Sulfuras, Hand of Ragnaros")
+                            if (item.Name != SulfurasName)
                             {
                                 item.Quality -= 1;
                             }
