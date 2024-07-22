@@ -26,75 +26,7 @@ public class GildedRose
     {
         foreach (var item in Items)
         {
-            if (item.Name != AgedBrieName && item.Name != BackstagePassesName)
-            {
-                if (item.Quality > 0)
-                {
-                    if (item.Name != SulfurasName)
-                    {
-                        item.Quality -= 1;
-                    }
-                }
-            }
-            else
-            {
-                if (item.Quality < 50)
-                {
-                    item.Quality += 1;
-
-                    if (item.Name == BackstagePassesName)
-                    {
-                        if (item.SellIn < 11)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality += 1;
-                            }
-                        }
-
-                        if (item.SellIn < 6)
-                        {
-                            if (item.Quality < 50)
-                            {
-                                item.Quality += 1;
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (item.Name != SulfurasName)
-            {
-                item.SellIn -= 1;
-            }
-
-            if (item.SellIn < 0)
-            {
-                if (item.Name != AgedBrieName)
-                {
-                    if (item.Name != BackstagePassesName)
-                    {
-                        if (item.Quality > 0)
-                        {
-                            if (item.Name != SulfurasName)
-                            {
-                                item.Quality -= 1;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        item.Quality -= item.Quality;
-                    }
-                }
-                else
-                {
-                    if (item.Quality < 50)
-                    {
-                        item.Quality += 1;
-                    }
-                }
-            }
+            item.UpdateQuality();
         }
     }
 }
