@@ -7,15 +7,6 @@ namespace GildedRoseTests;
 
 public class GildedRoseTest
 {
-    [Fact(Skip = "building my own suite of tests. skipped temporarily")]
-    public void foo()
-    {
-        IList<Item> Items = new List<Item> { new Item { Name = "foo", SellIn = 0, Quality = 0 } };
-        GildedRose app = new GildedRose(Items);
-        app.UpdateQuality();
-        Assert.Equal("foo", Items[0].Name);
-    }
-
     [Theory]
     [InlineData(-224)]
     [InlineData(-212)]
