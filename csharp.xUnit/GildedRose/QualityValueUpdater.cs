@@ -12,7 +12,7 @@ public class DefaultQualityValueUpdater : IQualityValueUpdater
     public Quality UpdateQualityValue(Quality currentQuality, int sellIn)
     {
         // duplicate - how to remove it?
-        var decreaseBy = sellIn < 0 ? 2 : 1;
+        var decreaseBy = sellIn < 1 ? 2 : 1;
         return currentQuality - (uint)decreaseBy;
     }
 }
@@ -22,7 +22,7 @@ public class IncreaseQualityUpdater : IQualityValueUpdater
     public Quality UpdateQualityValue(Quality currentQuality, int sellIn)
     {
         // duplicate - how to remove it?
-        var increaseBy = sellIn < 0 ? 2 : 1;
+        var increaseBy = sellIn < 1 ? 2 : 1;
         return currentQuality + (uint)increaseBy;
     }
 }
@@ -40,22 +40,13 @@ public class BackStagePassesQualityUpdater : IQualityValueUpdater
 {
     public Quality UpdateQualityValue(Quality currentQuality, int sellIn)
     {
-        if (sellIn < 0)
+        return sellIn switch
         {
-            return currentQuality.ResetToZero();
-        }
-        
-        if(sellIn < 5)
-        {
-            return currentQuality + 3;
-        }
-
-        if (sellIn < 10)
-        {
-            return currentQuality + 2;
-        }
-
-        return currentQuality + 1;
+            < 1 => currentQuality.ResetToZero(),
+            < 6 => currentQuality + 3,
+            < 11 => currentQuality + 2,
+            _ => currentQuality + 1
+        };
     }
 }
 

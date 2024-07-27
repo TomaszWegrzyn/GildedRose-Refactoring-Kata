@@ -6,8 +6,8 @@ public static class ItemExtensions
     {
         var sellInUpdater = SellInValueUpdaterFactory.Create(item.Name);
         var qualityValueUpdater = QualityValueUpdaterFactory.Create(item.Name);
-        item.SellIn = sellInUpdater.UpdateSellInValue(item.SellIn);
         item.Quality = (int)qualityValueUpdater.UpdateQualityValue(item.GetQuality(), item.SellIn);
+        item.SellIn = sellInUpdater.UpdateSellInValue(item.SellIn);
     }
 
     private static Quality GetQuality(this Item item)
