@@ -50,6 +50,16 @@ public class BackStagePassesQualityUpdater : IQualityValueUpdater
     }
 }
 
+public class ConjuredQualityValueUpdater : IQualityValueUpdater
+{
+    public Quality UpdateQualityValue(Quality currentQuality, int sellIn)
+    {
+        // duplicate - how to remove it?
+        var decreaseBy = sellIn < 1 ? 4 : 2;
+        return currentQuality - (uint)decreaseBy;
+    }
+}
+
 public static class QualityValueUpdaterFactory
 {
     public static IQualityValueUpdater Create(string itemName)
@@ -59,6 +69,7 @@ public static class QualityValueUpdaterFactory
             GildedRose.AgedBrieName => new IncreaseQualityUpdater(),
             GildedRose.SulfurasName => new NoopQualityUpdater(),
             GildedRose.BackstagePassesName => new BackStagePassesQualityUpdater(),
+            GildedRose.ConjuredName => new ConjuredQualityValueUpdater(),
             _ => new DefaultQualityValueUpdater()
         };
     }

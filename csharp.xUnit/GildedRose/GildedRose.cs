@@ -7,7 +7,9 @@ public class GildedRose
     public const string AgedBrieName = "Aged Brie";
     public const string SulfurasName = "Sulfuras, Hand of Ragnaros";
     public const string BackstagePassesName = "Backstage passes to a TAFKAL80ETC concert";
+    public const string ConjuredName = "Conjured";
 
+    
     // DO NOT CHANGE THIS property
     // ReSharper disable all
     IList<Item> Items;
@@ -21,6 +23,7 @@ public class GildedRose
     {
         Items = items;
     }
+
 
     public void UpdateQuality()
     {

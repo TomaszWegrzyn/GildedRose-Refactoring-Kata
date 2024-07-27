@@ -278,7 +278,7 @@ public class GildedRoseTest
         Assert.Equal(expectedSellIn, items.First().SellIn);
     }
 
-    [Theory]
+        [Theory]
     [InlineData("normal item", 10, 1)]
     [InlineData("normal item2", 11, 1)]
     [InlineData("normal item3", 20, 10)]
@@ -347,6 +347,64 @@ public class GildedRoseTest
         Assert.Equal(expectedSellIn, items.First().SellIn);
     }
     
+    [Theory]
+    [InlineData( 10, 1)]
+    [InlineData( 11, 1)]
+    [InlineData( 20, 10)]
+    [InlineData( 2, 2)]
+    [InlineData( 10, 10)]
+    [InlineData( 10, 3)]
+    [InlineData( 10, 220)]
+    [InlineData( 20, 301)]
+    [InlineData( 30, 780)]
+    [InlineData( 50, 6)]
+    public void ConjuredItemsDecreaseInQualityBy2DownTo0WhenSellInIsAbove0(int quality, int sellIn)
+    {
+        var items = UpdateQuality(CreateConjured(quality, sellIn));
+        
+        Assert.Equal(quality - 2, items.First().Quality);
+    
+    }
+    
+    
+    [Theory]
+    [InlineData( 10, 0)]
+    [InlineData( 11, -1)]
+    [InlineData( 20, 0)]
+    [InlineData( 4, -2)]
+    [InlineData( 10, -10)]
+    [InlineData( 10, -220)]
+    [InlineData( 30, -3780)]
+    [InlineData( 50, 0)]
+    public void ConjuredItemsDecreaseInQualityBy4DownTo0WhenSellInIsBelow1(int quality, int sellIn)
+    {
+        var items = UpdateQuality(CreateConjured(quality, sellIn));
+        
+        Assert.Equal(quality - 4, items.First().Quality);
+    }
+    
+     
+    [Theory]
+    [InlineData( 0, 0)]
+    [InlineData( 1, -1)]
+    [InlineData( 2, 11)]
+    [InlineData(5, 1)]
+    [InlineData(20, 2)]
+    [InlineData(2, -2)]
+    [InlineData( 10, 0)]
+    [InlineData(10, -10)]
+    [InlineData(10, -220)]
+    [InlineData(20, 0)]
+    [InlineData(30, -3780)]
+    [InlineData(50, 0)]
+    public void ConjuredItemsSellInAlwaysDecreasesBy1(int quality, int sellIn)
+    {
+        var agedBrie = CreateConjured(quality, sellIn);
+        var items = UpdateQuality(agedBrie);
+        var expectedSellIn = sellIn -1;
+        Assert.Equal(expectedSellIn, items.First().SellIn);
+    }
+    
     private static IList<Item> UpdateQuality(Item item)
     {
         IList<Item> items = [item];
@@ -382,6 +440,17 @@ public class GildedRoseTest
         {
             Name = GildedRose.SulfurasName,
             Quality = 80,
+            SellIn = sellIn
+        };
+        return sulfuras;
+    }
+    
+    private static Item CreateConjured(int quality, int sellIn)
+    {
+        var sulfuras = new Item()
+        {
+            Name = GildedRose.ConjuredName,
+            Quality = quality,
             SellIn = sellIn
         };
         return sulfuras;
