@@ -40,11 +40,22 @@ public class BackStagePassesQualityUpdater : IQualityValueUpdater
 {
     public Quality UpdateQualityValue(Quality currentQuality, int sellIn)
     {
-        return sellIn switch
+        if (sellIn < 0)
         {
-            < 0 => currentQuality.ResetToZero()
-            < 
-        };
+            return currentQuality.ResetToZero();
+        }
+        
+        if(sellIn < 5)
+        {
+            return currentQuality + 3;
+        }
+
+        if (sellIn < 10)
+        {
+            return currentQuality + 2;
+        }
+
+        return currentQuality + 1;
     }
 }
 
@@ -52,6 +63,12 @@ public static class QualityValueUpdaterFactory
 {
     public static IQualityValueUpdater Create(string itemName)
     {
-        throw new NotImplementedException();
+        return itemName switch
+        {
+            GildedRose.AgedBrieName => new IncreaseQualityUpdater(),
+            GildedRose.SulfurasName => new NoopQualityUpdater(),
+            GildedRose.BackstagePassesName => new BackStagePassesQualityUpdater(),
+            _ => new DefaultQualityValueUpdater()
+        };
     }
 }
