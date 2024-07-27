@@ -5,15 +5,18 @@ namespace GildedRoseKata;
 public interface IQualityValueUpdater
 {
     Quality UpdateQualityValue(Quality currentQuality, int sellIn);
+
+    static uint DefaultDegradeRate(int sellIn)
+    {
+        return (uint)(sellIn < 1 ? 2 : 1);
+    }
 }
 
 public class DefaultQualityValueUpdater : IQualityValueUpdater
 {
     public Quality UpdateQualityValue(Quality currentQuality, int sellIn)
     {
-        // duplicate - how to remove it?
-        var decreaseBy = sellIn < 1 ? 2 : 1;
-        return currentQuality - (uint)decreaseBy;
+        return currentQuality - IQualityValueUpdater.DefaultDegradeRate(sellIn);
     }
 }
 
@@ -21,9 +24,7 @@ public class IncreaseQualityUpdater : IQualityValueUpdater
 {
     public Quality UpdateQualityValue(Quality currentQuality, int sellIn)
     {
-        // duplicate - how to remove it?
-        var increaseBy = sellIn < 1 ? 2 : 1;
-        return currentQuality + (uint)increaseBy;
+        return currentQuality + IQualityValueUpdater.DefaultDegradeRate(sellIn);;
     }
 }
 
@@ -54,9 +55,7 @@ public class ConjuredQualityValueUpdater : IQualityValueUpdater
 {
     public Quality UpdateQualityValue(Quality currentQuality, int sellIn)
     {
-        // duplicate - how to remove it?
-        var decreaseBy = sellIn < 1 ? 4 : 2;
-        return currentQuality - (uint)decreaseBy;
+        return currentQuality - 2 * IQualityValueUpdater.DefaultDegradeRate(sellIn);
     }
 }
 
