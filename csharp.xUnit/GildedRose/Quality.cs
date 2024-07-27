@@ -7,7 +7,7 @@ public class Quality
     private readonly int _currentValue;
     private readonly int _maxValue;
 
-    public Quality(int currentValue, int maxValue = int.MaxValue)
+    public Quality(int currentValue, int maxValue)
     {
         if (currentValue < 0)
         {
@@ -72,10 +72,5 @@ public class Quality
     public static explicit operator int(Quality quality)
     {
         return quality._currentValue;
-    }
-    
-    public static explicit operator Quality(int value)
-    {
-        return new Quality(value);
     }
 }

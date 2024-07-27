@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GildedRoseKata;
 
@@ -13,6 +14,8 @@ public class GildedRose
     // DO NOT CHANGE THIS property
     // ReSharper disable all
     IList<Item> Items;
+
+    private readonly IReadOnlyCollection<ItemUpdater> _itemUpdaters;
     // ReSharper restore all
 
 
@@ -22,14 +25,20 @@ public class GildedRose
     public GildedRose(IList<Item> items)
     {
         Items = items;
+        _itemUpdaters = items.Select(CreateItemUpdater).ToList();
+    }
+    
+    private static ItemUpdater CreateItemUpdater(Item item)
+    {
+        return new ItemUpdater(item);
     }
 
 
     public void UpdateQuality()
     {
-        foreach (var item in Items)
+        foreach (var itemUpdater in _itemUpdaters)
         {
-            item.UpdateQuality();
+            itemUpdater.Update();
         }
     }
 }

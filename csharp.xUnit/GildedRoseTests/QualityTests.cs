@@ -18,7 +18,7 @@ public class QualityTests
     [InlineData(int.MaxValue)]
     public void CanCreateQualityWithPositiveOr0Value(int value)
     {
-        _ = new Quality(value);
+        _ = new Quality(value, int.MaxValue);
     }
     
     [Theory]
@@ -48,7 +48,7 @@ public class QualityTests
     [InlineData(int.MinValue)]
     public void QualityValueMustNotBeNegative(int value)
     {
-        Assert.Throws<ArgumentException>(() => _ = new Quality(value));
+        Assert.Throws<ArgumentException>(() => _ = new Quality(value, int.MaxValue));
     }
     
     [Theory]
@@ -82,14 +82,7 @@ public class QualityTests
     [Fact]
     public void QualityHasExplicitConversionToInt()
     {
-        var quality = new Quality(11);
+        var quality = new Quality(11, 50);
         _ = (int) quality;
-    }
-    
-    [Fact]
-    public void QualityHasExplicitConversionFromInt()
-    {
-        const int value = 42;
-        _ = (Quality) value;
     }
 }
