@@ -79,6 +79,16 @@ public class GildedRoseTest
     }
     
     [Theory]
+    [InlineData(50, 2342342)]
+    public void AgedBrieNoLongerIncreasesUpTo50WhenSellInAboveZero(int quality, int sellIn)
+    {
+        var agedBrie = CreateAgedBrie(quality, sellIn);
+        var items = UpdateQuality(agedBrie);
+        
+        Assert.Equal(quality, items.First().Quality);
+    }
+    
+    [Theory]
     [InlineData(0, 0)]
     [InlineData(0, -1)]
     [InlineData(0, -2)]
